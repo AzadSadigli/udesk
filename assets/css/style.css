@@ -2509,3 +2509,8 @@ footer.site-footer {
 .bold {
   font-weight: bold;
 }
+.bootstrap-select .dropdown-toggle .filter-option{
+  border: 1px solid #ced4da;
+  border-radius: 3px;
+  background: white;
+}

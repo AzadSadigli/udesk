@@ -5,15 +5,23 @@ const homeController = require('./controllers/home_controller');
 const userController = require('./controllers/user_controller');
 const authController = require('./controllers/auth_controller');
 const testController = require('./controllers/test_controller');
-const productController = require('./controllers/product_controller');
+const productController = require('./modules/products/controllers/product_controller');
+const salesController = require('./modules/sales/controllers/sales_controller');
 const {auth,no_auth} = require('./middlewares/auth');
 
 
 
 router.get('/',auth,homeController.getHome);
 router.get('/table',auth,homeController.getTable);
-router.get('/sale/add',auth,homeController.getSales); // has problem
 router.get('/tabs',auth,homeController.getTabs);
+
+
+// sales routes
+router.get('/sale/add',auth,salesController.addPage); 
+router.post('/sale/add',auth,salesController.addSale);
+router.get('/sale/list',auth,salesController.salesList);
+
+
 
 // auth routes
 router.get('/login',no_auth,authController.loginPage);

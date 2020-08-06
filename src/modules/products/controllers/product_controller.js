@@ -1,7 +1,9 @@
 const fs = require('fs');
-const db = require('../../config/database.js');
+const db = require('./../../../../config/database.js');
+const path = require("path");
+const pth = '../modules/products/views/';
 
-let configs = JSON.parse(fs.readFileSync('./config/config.json'));
+let configs = JSON.parse(fs.readFileSync(path.resolve(__dirname, "../../../../config/config.json")));
 let locals = {project_name: configs.project_name};
 
 exports.addPage = (req, res) => {
@@ -13,8 +15,7 @@ exports.addPage = (req, res) => {
         message: req.flash('message'),
         type: req.flash('type')
       });
-    res.render('products/add',locals)
-    // res.send(slugify('Salam necəsiniz?ş nƏnə '));
+    res.render(pth + 'add',locals)
 }
 
 let getMainID = () => {
@@ -98,7 +99,7 @@ exports.productList = (req,res) => {
                 type: req.flash('type'),
                 products: result
               });
-            res.render('products/list',locals);
+            res.render(pth + 'list',locals);
         }else{
             res.send(error);
         }

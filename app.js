@@ -36,14 +36,12 @@ app.use(cookieParser());
 
 app.use(session({
     secret: 'newSecretOfSystem2364',
-    // secret: "secret",
     cookie: {
         // secure: true,
-        maxAge:60000
+        maxAge:600000
     },
     resave: false,
     saveUninitialized: false,
-    // store: store
 }));
 
 app.use(flash());
