@@ -87,7 +87,7 @@ exports.productList = (req,res) => {
     let sql = `SELECT pr.*,
                 (SELECT price FROM product_prices WHERE product_id = pr.id ORDER BY id DESC LIMIT 1) as price,
                 (SELECT quantity FROM product_quantities WHERE product_id = pr.id ORDER BY id DESC LIMIT 1) as quantity
-                FROM products pr  ORDER BY id DESC`;
+                FROM products pr WHERE deleted_at IS NULL ORDER BY id DESC`;
     db.query(sql,function(error,result){
         if(!error){
             locals = Object.assign(locals,{

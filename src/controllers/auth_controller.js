@@ -27,15 +27,18 @@ exports.loginPage = (req, res) => {
 }
 
 exports.profilePage = (req, res) => {
+    let {email} = req.session;
+    console.log("email: " + req.session.email);
+    
     let sql = 'SELECT * FROM `users` WHERE email = ? ';
-    db.query(sql,[req.session.email],(err,result) => {
+    db.query(sql,[email],(err,result) => {
         if(err) throw err;
         locals = Object.assign(locals,{
-            title: result[0].name + ' ' + result[0].surname,
+            title: req.session.name + ' ' + req.session.surname,
             link: 'profile',
             metaDescription: '',
             metaKeys: '',
-            user: result[0],
+            user: req.session, 
             message: req.flash('message'),
             type: req.flash('type')
           });
@@ -61,16 +64,28 @@ exports.registerPage = (req, res, next) => {
 
 
 exports.logout = (req,res) => {
-    sess = req.session;
-    sess.destroy((err) => {
+    req.session.destroy((err) => {
         if(err) {return console.log(err);}
-        return res.redirect('/login');
+        return res.cookie('rememberMeKey',null).redirect('/login');
     });
 }
 
+// async function setRememberMe(req, res){
+//     let {email,tk} = req;
+//     db.query("UPDATE `users` SET ? WHERE email = ?", [{remember_me:tk},email], function (error_rm, rsrm) {
+//         if(!error_rm){
+//             console.log("Hello");
+//             return res.cookie('rememberMeKey',tk);
+//         }else{
+//             console.log(error_rm);
+//         }
+//     });
+// }
+
 
 exports.loginAction = (req,res) => {
-    let {email,password} = req.body;
+    let {email,password,rememberme} = req.body;
+    let tk = global.token;
     if(!email || !password){
         let msg = (!email ? "'email'" : "'password'") + ' cannot be empty';
         req.flash('message',msg);
@@ -91,10 +106,27 @@ exports.loginAction = (req,res) => {
                         sess.auth_user = results[0]['id'];
                         sess.name = results[0]['name'];
                         sess.surname = results[0]['surname'];
-
                         req.flash('message','Logged in');
                         req.flash('type','success');
-                        return res.redirect('/profile');
+                        if(rememberme){
+                            // setRememberMe({email:email,tk:tk});
+                            db.query("UPDATE `users` SET ? WHERE email = ?", [{remember_me:tk},email], function (error_rm, rsrm) {
+                                if(!error_rm){
+                                    // res.cookie('rememberMeKey',tk);
+                                    return res.cookie('rememberMeKey',tk).redirect('/profile');
+                                }else{
+                                    return res.cookie('rememberMeKey',null).redirect('/profile');
+                                }
+                            });
+                        }else{
+                            db.query("UPDATE `users` SET ? WHERE email = ?", [{remember_me:null},email], function (error_rm, rsrm) {
+                                if(!error_rm){
+                                    return res.cookie('rememberMeKey',tk).redirect('/profile');
+                                }else{
+                                    return res.cookie('rememberMeKey',null).redirect('/profile');
+                                }
+                            });
+                        }
                     } else {
                         req.flash('message','Incorrect password');
                         req.flash('type','danger');

@@ -1,7 +1,7 @@
 const fs = require('fs');
 const db = require('./../../../../config/database.js');
 const path = require("path");
-const pth = '../modules/sales/views/';
+const pth = '../modules/invoices/views/';
 
 let configs = JSON.parse(fs.readFileSync(path.resolve(__dirname, "../../../../config/config.json")));
 let locals = {project_name: configs.project_name};
@@ -18,9 +18,9 @@ exports.addPage = (req, res) => {
             now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
             let def_val_date = now.toISOString().slice(0, -1);
             locals = Object.assign(locals,{
-                title: 'Sales',
-                link: 'sales',
-                parentName: 'Sales',
+                title: 'Invoices',
+                link: 'invoices',
+                parentName: 'Invoices',
                 metaDescription: '',
                 dashboard: 'dashboard',
                 metaKeys: '',
@@ -35,7 +35,7 @@ exports.addPage = (req, res) => {
 }
 
 
-exports.addSale = (req, res) => {
+exports.addInvoice = (req, res) => {
     let b = req.body;
     let list = {
         user_id:req.session.auth_user,
@@ -53,24 +53,24 @@ exports.addSale = (req, res) => {
         let msg = (!b.product_id ? "'product'" : (!b.total_price ? "'total price'" : (!b.quantity ? "'quantity'" : "'datetime"))) + ' cannot be empty';
         req.flash('message',msg);
         req.flash('type','danger');
-        return res.redirect('/sale/add')
+        return res.redirect('/invoice/add')
     }
     db.query('INSERT INTO sales SET ?',list,function(error,result){
         if(error){
             // res.send(error);
             req.flash('message',error.message);
             req.flash('type','danger');
-            return res.redirect('/sale/add')
+            return res.redirect('/invoice/add')
         }else{
-            req.flash('message','Sale added');
+            req.flash('message','Invoice added');
             req.flash('type','success');
-            return res.redirect('/sale/add')
+            return res.redirect('/invoice/add')
         }
     });
 }
 
 
-exports.salesList = (req, res) => {
+exports.invoicesList = (req, res) => {
     let sql = `SELECT sl.*,
                 (SELECT name FROM products WHERE id = sl.product_id) as product,
                 (SELECT CONCAT(name, ' ', surname) FROM users WHERE id = sl.user_id) as seller
@@ -83,9 +83,9 @@ exports.salesList = (req, res) => {
             // now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
             // let def_val_date = now.toISOString().slice(0, -1);
             locals = Object.assign(locals,{
-                title: 'Sales',
-                link: 'sales',
-                parentName: 'Sales',
+                title: 'Invoices',
+                link: 'invoices',
+                parentName: 'Invoices',
                 metaDescription: '',
                 dashboard: 'dashboard',
                 metaKeys: '',

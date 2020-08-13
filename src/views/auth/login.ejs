@@ -2,6 +2,23 @@
 <html lang='az'>
 <head>
 <title>Login</title>
+<link rel="apple-touch-icon" sizes="57x57" href="/assets/favicon/apple-icon-57x57.png">
+<link rel="apple-touch-icon" sizes="60x60" href="/assets/favicon/apple-icon-60x60.png">
+<link rel="apple-touch-icon" sizes="72x72" href="/assets/favicon/apple-icon-72x72.png">
+<link rel="apple-touch-icon" sizes="76x76" href="/assets/favicon/apple-icon-76x76.png">
+<link rel="apple-touch-icon" sizes="114x114" href="/assets/favicon/apple-icon-114x114.png">
+<link rel="apple-touch-icon" sizes="120x120" href="/assets/favicon/apple-icon-120x120.png">
+<link rel="apple-touch-icon" sizes="144x144" href="/assets/favicon/apple-icon-144x144.png">
+<link rel="apple-touch-icon" sizes="152x152" href="/assets/favicon/apple-icon-152x152.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/apple-icon-180x180.png">
+<link rel="icon" type="image/png" sizes="192x192"  href="/assets/favicon/android-icon-192x192.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="96x96" href="/assets/favicon/favicon-96x96.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon/favicon-16x16.png">
+<link rel="manifest" href="/assets/favicon/manifest.json">
+<meta name="msapplication-TileColor" content="#ffffff">
+<meta name="msapplication-TileImage" content="/assets/favicon/ms-icon-144x144.png">
+<meta name="theme-color" content="#ffffff">
 <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <link rel='stylesheet prefetch' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css'>
 <link rel="stylesheet" href="assets/css/login.css">
@@ -69,8 +86,8 @@
                     			<form class="login-form" action="/login/action" method="post">
                     				<input type="email" class="input" name="email" autocomplete="off" placeholder="Email or Username">
                     				<input type="password" class="input" name="password" autocomplete="off" placeholder="Password">
-                    				<input type="checkbox" class="checkbox" checked id="remember_me">
-                    				<label for="remember_me">Remember me</label>
+                    				<input type="checkbox" class="checkbox" value="0" name="rememberme" id="rememberme">
+                    				<label for="rememberme">Remember me</label>
                     				<input type="submit" class="button" value="Login">
                     			</form>
                     			<div class="help-action">
@@ -128,7 +145,11 @@ $(function() {
             $(".recovery").addClass("closed")
         }
     });
-});;
+    $("#rememberme").on("change",function(){
+        let $rm = $("#rememberme");
+        $rm.val() == 1 ? $rm.val(0) : $rm.val(1);
+    });
+});
 
 </script>
 </body></html>

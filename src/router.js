@@ -7,6 +7,8 @@ const authController = require('./controllers/auth_controller');
 const testController = require('./controllers/test_controller');
 const productController = require('./modules/products/controllers/product_controller');
 const salesController = require('./modules/sales/controllers/sales_controller');
+const invoicesController = require('./modules/invoices/controllers/invoices_controller');
+const employeesController = require('./modules/employees/controllers/employee_controller');
 const {auth,no_auth} = require('./middlewares/auth');
 
 
@@ -20,7 +22,18 @@ router.get('/tabs',auth,homeController.getTabs);
 router.get('/sale/add',auth,salesController.addPage); 
 router.post('/sale/add',auth,salesController.addSale);
 router.get('/sale/list',auth,salesController.salesList);
+router.get('/sale/check-barcode',auth,salesController.checkBarcode);
 
+// invoices routes
+router.get('/invoice/add',auth,invoicesController.addPage); 
+router.post('/invoice/add',auth,invoicesController.addInvoice);
+router.get('/invoice/list',auth,invoicesController.invoicesList);
+router.get('/invoice/check-barcode',auth,invoicesController.checkBarcode);
+
+// employees routes
+router.get('/employee/add',auth,employeesController.addPage); 
+router.post('/employee/add',auth,employeesController.addEmployee);
+router.get('/employee/list',auth,employeesController.employeesList);
 
 
 // auth routes
@@ -44,7 +57,7 @@ router.post('/product/add',auth,productController.addAction);
 
 
 
-// router.get('/test,testController.testPage);
+router.get('/test',testController.testPage);
 
 
 

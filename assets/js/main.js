@@ -106,5 +106,36 @@ jQuery(document).ready(function($) {
 		$(".per_price").val(per)
 	});
  
-	$('[data-toggle="tooltip"]').tooltip()
+	$('[data-toggle="tooltip"]').tooltip();
+
+	$(".barcode_more").on("click",function(){
+		$(".barcode_more_div").toggleClass("hide");
+	});
+
+	$("#barcode").on('keypress',function(e) {
+		if(e.which == 13) {
+			let t = $(this);
+			$.ajax({
+				url: `/sale/check-barcode?barcode=${t.val()}`,
+				type: 'GET',
+				cache: true,
+				success:function(d){
+					if(d.length > 0){
+						let v = d[0];
+						let quantity = 1;
+						let h = `<tr>
+									<td>${v.barcode}</td>
+									<td>${v.name}</td>
+									<td>${v.price || 0}</td>
+									<td>${quantity}</td>
+								</tr>`;
+						$("#sales_list_inbarcode tbody").append(h);
+					}
+					console.log(d);
+				},complete:function(){
+					t.val('');
+				}
+			});
+		}
+	});
 });
