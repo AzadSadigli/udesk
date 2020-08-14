@@ -1,13 +1,13 @@
 const fs = require('fs');
-const db = require('../../config/database.js');
-const { reset } = require('nodemon');
-const Sequelize = require('sequelize');
+const db = require('./../../../../config/database.js');
 const bcrypt = require('bcrypt');
-const session = require('express-session');
 const saltRounds = 10;
+const path = require("path");
+const pth = '../modules/auth/views/';
+
 var sess;
 
-let configs = JSON.parse(fs.readFileSync('./config/config.json'));
+let configs = JSON.parse(fs.readFileSync(path.resolve(__dirname, "../../../../config/config.json")));
 let locals = {project_name: configs.project_name};
 
 exports.loginPage = (req, res) => {
@@ -22,14 +22,12 @@ exports.loginPage = (req, res) => {
             message: req.flash('message'),
             type: req.flash('type')
           });
-        res.render('auth/login',locals)
+        res.render(pth + 'login',locals)
     })
 }
 
 exports.profilePage = (req, res) => {
     let {email} = req.session;
-    console.log("email: " + req.session.email);
-    
     let sql = 'SELECT * FROM `users` WHERE email = ? ';
     db.query(sql,[email],(err,result) => {
         if(err) throw err;
@@ -42,7 +40,7 @@ exports.profilePage = (req, res) => {
             message: req.flash('message'),
             type: req.flash('type')
           });
-        res.render('profile',locals)
+        res.render(pth + 'profile',locals)
     })
 }
 
@@ -58,7 +56,7 @@ exports.registerPage = (req, res, next) => {
             message: req.flash('message'),
             type: req.flash('type')
           });
-        res.render('auth/register_user',locals)
+        res.render(pth + 'register_user',locals)
     });
 }
 

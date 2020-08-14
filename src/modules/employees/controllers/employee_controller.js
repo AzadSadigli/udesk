@@ -1,5 +1,7 @@
 const fs = require('fs');
 const db = require('./../../../../config/database.js');
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
 const path = require("path");
 const pth = '../modules/employees/views/';
 
@@ -18,13 +20,6 @@ exports.addPage = (req, res) => {
     res.render(pth + 'add',locals)
 }
 
-function firstFunction() {
-    return new Promise((resolve, reject) => {
-        
-    })
-  }
-  
-  //2. Create an async function
 async function getMainID() {
     return await getMainIDFirst()
 }; 
@@ -49,33 +44,33 @@ function getMainIDFirst() {
 }
 
 exports.addEmployee = (req, res) => {
-    let {barcode,name,price,quantity} = req.body;
-    let slug = slugify(name),
-        main_id = getMainID();
-
-    let list = {
-        slug: slug + '-' + main_id,
-        barcode: barcode,
-        name: name,
-        main_id: main_id,
-        user_id: req.session.auth_user
-    };
-    if(!name || !barcode || !price || !quantity){
-        let msg = (!name ? "'name'" : (!barcode ? "'barcode'" : (!price ? "'price" : "'quantity'"))) + ' cannot be empty';
+    let token = global.token,
+        $_rd_link = '/employee/add';
+    let {name,surname,email,password,password_confirm} = req.body;
+    if(!name || !surname || !email || !password || !password_confirm){
+        let msg = (!name ? "'name'" : (!surname ? "'surname'" : (!email ? "'email'" : (!password ? "'password'" : "'password confirm'")))) + ' cannot be empty';
         req.flash('message',msg);
         req.flash('type','danger');
-        return res.redirect('/employee/add')
+        return res.redirect($_rd_link)
     }
-    db.query(`INSERT INTO employees SET ?`,list,function(error,result){
-        if(error){
-            req.flash('message',error.message);
-            req.flash('type','danger');
-            return res.redirect('/employee/add')
-        }else{
-            req.flash('message','Successfully added!');
-            req.flash('type','success');
-            return res.redirect('/employee/add')
-        }
+    if(password !== password_confirm){
+        req.flash('message','Confirm password does not match');
+        req.flash('type','danger');
+        return res.redirect($_rd_link)
+    }
+    bcrypt.hash(password, saltRounds,function (err, password) {
+        let new_list = {name,surname,email,token,password};
+        db.query(`INSERT INTO users SET ?`,new_list,function(error,succ){
+            if(error){
+                req.flash('message',error.message);
+                req.flash('type','danger');
+                return res.redirect($_rd_link)
+            }else{
+                req.flash('message','Successfully added!');
+                req.flash('type','success');
+                return res.redirect($_rd_link)
+            }
+        });
     });
 }
 

@@ -1,15 +1,17 @@
 const express = require('express');
 const router = express.Router();
+const {auth,no_auth} = require('./middlewares/auth');
 
 const homeController = require('./controllers/home_controller');
 const userController = require('./controllers/user_controller');
-const authController = require('./controllers/auth_controller');
 const testController = require('./controllers/test_controller');
-const productController = require('./modules/products/controllers/product_controller');
-const salesController = require('./modules/sales/controllers/sales_controller');
-const invoicesController = require('./modules/invoices/controllers/invoices_controller');
-const employeesController = require('./modules/employees/controllers/employee_controller');
-const {auth,no_auth} = require('./middlewares/auth');
+
+const md = './modules/';
+const authController = require(md + 'auth/controllers/auth_controller');
+const productController = require(md + 'products/controllers/product_controller');
+const salesController = require(md + 'sales/controllers/sales_controller');
+const invoicesController = require(md + 'invoices/controllers/invoices_controller');
+const employeesController = require(md + 'employees/controllers/employee_controller');
 
 
 

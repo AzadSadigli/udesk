@@ -138,4 +138,6 @@ jQuery(document).ready(function($) {
 			});
 		}
 	});
+	let current_year = new Date().getFullYear();
+	$("#current_year").html(current_year)
 });
