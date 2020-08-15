@@ -6,12 +6,12 @@ const homeController = require('./controllers/home_controller');
 const userController = require('./controllers/user_controller');
 const testController = require('./controllers/test_controller');
 
-const md = './modules/';
-const authController = require(md + 'auth/controllers/auth_controller');
-const productController = require(md + 'products/controllers/product_controller');
-const salesController = require(md + 'sales/controllers/sales_controller');
-const invoicesController = require(md + 'invoices/controllers/invoices_controller');
-const employeesController = require(md + 'employees/controllers/employee_controller');
+const md = './modules/';const co = '/controllers/';
+const authController = require(md + 'auth'+co+'auth_controller');
+const productController = require(md + 'products'+co+'product_controller');
+const salesController = require(md + 'sales'+co+'sales_controller');
+const invoicesController = require(md + 'invoices'+co+'invoices_controller');
+const employeesController = require(md + 'employees'+co+'employee_controller');
 
 
 
@@ -38,11 +38,6 @@ router.post('/employee/add',auth,employeesController.addEmployee);
 router.get('/employee/list',auth,employeesController.employeesList);
 
 
-// auth routes
-router.get('/login',no_auth,authController.loginPage);
-router.post('/login/action',no_auth,authController.loginAction);
-
-
 router.get('/profile',auth,authController.profilePage);
 router.get('/logout',auth,authController.logout);
 
@@ -55,6 +50,11 @@ router.post('/employee/add',auth,authController.registerUser);
 router.get('/product/list',auth,productController.productList);
 router.get('/product/add',auth,productController.addPage);
 router.post('/product/add',auth,productController.addAction);
+
+
+// auth routes
+router.get('/login',no_auth,authController.loginPage);
+router.post('/login/action',no_auth,authController.loginAction);
 
 
 

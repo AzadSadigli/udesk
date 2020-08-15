@@ -68,18 +68,6 @@ exports.logout = (req,res) => {
     });
 }
 
-// async function setRememberMe(req, res){
-//     let {email,tk} = req;
-//     db.query("UPDATE `users` SET ? WHERE email = ?", [{remember_me:tk},email], function (error_rm, rsrm) {
-//         if(!error_rm){
-//             console.log("Hello");
-//             return res.cookie('rememberMeKey',tk);
-//         }else{
-//             console.log(error_rm);
-//         }
-//     });
-// }
-
 
 exports.loginAction = (req,res) => {
     let {email,password,rememberme} = req.body;
