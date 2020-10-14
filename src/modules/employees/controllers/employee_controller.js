@@ -46,8 +46,8 @@ function getMainIDFirst() {
 exports.addEmployee = (req, res) => {
     let token = global.token,
         $_rd_link = '/employee/add';
-    let {name,surname,email,password,password_confirm} = req.body;
-    if(!name || !surname || !email || !password || !password_confirm){
+    let {name,surname,email,user_role,password,password_confirm} = req.body;
+    if(!name || !surname || !email || !password || !password_confirm || !role){
         let msg = (!name ? "'name'" : (!surname ? "'surname'" : (!email ? "'email'" : (!password ? "'password'" : "'password confirm'")))) + ' cannot be empty';
         req.flash('message',msg);
         req.flash('type','danger');
@@ -58,8 +58,9 @@ exports.addEmployee = (req, res) => {
         req.flash('type','danger');
         return res.redirect($_rd_link)
     }
+    let role = ['admin','developer','seller','manager'].includes(user_role) ? user_role : 'seller';
     bcrypt.hash(password, saltRounds,function (err, password) {
-        let new_list = {name,surname,email,token,password};
+        let new_list = {name,surname,email,token,password,role};
         db.query(`INSERT INTO users SET ?`,new_list,function(error,succ){
             if(error){
                 req.flash('message',error.message);

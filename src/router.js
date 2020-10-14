@@ -37,14 +37,15 @@ router.get('/employee/add',auth,employeesController.addPage);
 router.post('/employee/add',auth,employeesController.addEmployee);
 router.get('/employee/list',auth,employeesController.employeesList);
 
+// router.get('/employee/list',auth,userController.list);
+// router.get('/employee/add',auth,authController.registerPage);
+// router.post('/employee/add',auth,authController.registerUser);
 
 router.get('/profile',auth,authController.profilePage);
 router.get('/logout',auth,authController.logout);
 
 
-router.get('/employee/list',auth,userController.list);
-router.get('/employee/add',auth,authController.registerPage);
-router.post('/employee/add',auth,authController.registerUser);
+
 
 // product routes
 router.get('/product/list',auth,productController.productList);
