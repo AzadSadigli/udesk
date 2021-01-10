@@ -9,35 +9,30 @@ const router = require('./src/router');
 const TokenGenerator = require('uuid-token-generator');
 const tokgen2 = new TokenGenerator(256, TokenGenerator.BASE62);
 
-const { I18n } = require('i18n')
+// const { I18n } = require('i18n')
 const fs = require("fs");
 const md_path = __dirname + '/src/modules/';
 const configs_datas = JSON.parse(fs.readFileSync('./config/config.json'));
 
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
-const { config } = require('./config/database');
 global.current_time = new Date().toLocaleString('en-US', {timeZone: 'Asia/Baku'});
 global.token = tokgen2.generate();
 
-const i18n = new I18n()
+// const i18n = new I18n()
 
-i18n.configure({
-    locales: ['en','az','ru','tr'],
-    directory: path.join(__dirname, 'languages'),
-    defaultLocale: 'az',
-    cookie: 'whCookieSecretName',
-    register: global
-})
-// i18n.setLocale('en')
+// i18n.configure({
+//     locales: ['en','az','ru','tr'],
+//     directory: path.join(__dirname, 'languages'),
+//     defaultLocale: 'az',
+//     cookie: 'whCookieSecretName',
+//     register: global
+// })
+// module.export = i18n
+
+// i18n.setLocale('tr')
 // console.log(__('hello'));
 
-global.exist_modules = [];
-if(Array.isArray(configs_datas.features)){
-    configs_datas.features.forEach(v => {
-        if (fs.existsSync(md_path+v)) global.exist_modules.push(v);
-    });
-}
 
 
 app.use(bodyParser.json());
@@ -70,9 +65,17 @@ global.slugify = function(txt){
     return text.toLowerCase().replace(/ /g,'-').replace(/[^\w-]+/g,'');
 }
 
+global.exist_modules = [];
+if(Array.isArray(configs_datas.features)){
+    configs_datas.features.forEach(v => {
+        if (fs.existsSync(md_path+v)) global.exist_modules.push(v);
+    });
+}
+
+
 app.use('/',router);
 
 
 app.listen(port, () => {
-    // console.log(`Example app listening at http://localhost:${port}`)
+    console.log(`Warehouse listening at http://localhost:${port}`)
 })

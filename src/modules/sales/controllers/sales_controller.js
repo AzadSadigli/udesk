@@ -1,7 +1,8 @@
 const fs = require('fs');
-const db = require('./../../../../config/database.js');
 const path = require("path");
 const pth = '../modules/sales/views/';
+const db = require(path.dirname(require.main.filename) + '/config/database.js');
+require(path.dirname(require.main.filename) + '/src/controllers/lang_controller.js');
 
 let configs = JSON.parse(fs.readFileSync(path.resolve(__dirname, "../../../../config/config.json")));
 let locals = {project_name: configs.project_name};
@@ -18,7 +19,7 @@ exports.addPage = (req, res) => {
             now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
             let def_val_date = now.toISOString().slice(0, -1);
             locals = Object.assign(locals,{
-                title: 'Sales',
+                title: __('Add sale'),
                 link: 'sales',
                 parentName: 'Sales',
                 metaDescription: '',
@@ -83,7 +84,7 @@ exports.salesList = (req, res) => {
             // now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
             // let def_val_date = now.toISOString().slice(0, -1);
             locals = Object.assign(locals,{
-                title: 'Sales',
+                title: __('Sales'),
                 link: 'sales',
                 parentName: 'Sales',
                 metaDescription: '',

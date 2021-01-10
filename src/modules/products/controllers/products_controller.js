@@ -1,14 +1,15 @@
 const fs = require('fs');
-const db = require('./../../../../config/database.js');
 const path = require("path");
 const pth = '../modules/products/views/';
+const db = require(path.dirname(require.main.filename) + '/config/database.js');
+require(path.dirname(require.main.filename) + '/src/controllers/lang_controller.js');
 
 let configs = JSON.parse(fs.readFileSync(path.resolve(__dirname, "../../../../config/config.json")));
 let locals = {project_name: configs.project_name};
 
 exports.addPage = (req, res) => {
     locals = Object.assign(locals,{
-        title: 'Product',
+        title: __('Add product'),
         link: 'product',
         metaDescription: '',
         metaKeys: '',
@@ -91,7 +92,7 @@ exports.productList = (req,res) => {
     db.query(sql,function(error,result){
         if(!error){
             locals = Object.assign(locals,{
-                title: 'Product',
+                title: __('Product'),
                 link: 'product',
                 metaDescription: '',
                 metaKeys: '',

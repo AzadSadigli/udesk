@@ -10,10 +10,11 @@ const testController = require('./controllers/test_controller');
 
 const md = './modules/';const co = '/controllers/';
 const authController = require(md + 'auth'+co+'auth_controller');
-const productController = require(md + 'products'+co+'product_controller');
+const productController = require(md + 'products'+co+'products_controller');
 const salesController = require(md + 'sales'+co+'sales_controller');
-const invoicesController = require(md + 'invoices'+co+'invoices_controller');
+const purchasesController = require(md + 'purchases'+co+'purchases_controller');
 const employeesController = require(md + 'employees'+co+'employee_controller');
+const expenseController = require(md + 'expenses'+co+'expenses_controller');
 
 
 /* routes section */
@@ -29,19 +30,16 @@ router.get('/sale/list',auth,salesController.salesList);
 router.get('/sale/check-barcode',auth,salesController.checkBarcode);
 
 // invoices routes
-router.get('/invoice/add',auth,invoicesController.addPage); 
-router.post('/invoice/add',auth,invoicesController.addInvoice);
-router.get('/invoice/list',auth,invoicesController.invoicesList);
-router.get('/invoice/check-barcode',auth,invoicesController.checkBarcode);
+router.get('/purchase/add',auth,purchasesController.addPage); 
+router.post('/purchase/add',auth,purchasesController.addInvoice);
+router.get('/purchase/list',auth,purchasesController.invoicesList);
+router.get('/purchase/check-barcode',auth,purchasesController.checkBarcode);
 
 // employees routes
 router.get('/employee/add',auth,employeesController.addPage); 
 router.post('/employee/add',auth,employeesController.addEmployee);
 router.get('/employee/list',auth,employeesController.employeesList);
 
-// router.get('/employee/list',auth,userController.list);
-// router.get('/employee/add',auth,authController.registerPage);
-// router.post('/employee/add',auth,authController.registerUser);
 
 router.get('/profile',auth,authController.profilePage);
 router.get('/logout',auth,authController.logout);
@@ -59,6 +57,11 @@ router.post('/product/add',auth,productController.addAction);
 router.get('/login',no_auth,authController.loginPage);
 router.post('/login/action',no_auth,authController.loginAction);
 
+
+// expenses routes
+router.get('/expenses/list',no_auth,expenseController.expensesList);
+router.get('/expenses/expenditure/add',no_auth,expenseController.expenditureAddView);
+router.get('/expenses/income/add',no_auth,expenseController.incomeAddView);
 
 
 

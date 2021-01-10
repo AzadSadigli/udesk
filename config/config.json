@@ -1,5 +1,6 @@
 {
     "title": "hello",
     "project_name": "Kamur Group",
-    "features": ["auth","customers","employees","expenses","invoices","products","sales","tasks","purchases"]
+    "features": ["auth","customers","employees","expenses","purchases","products","sales","tasks","loans"],
+    "languages": ["en","az","ru","tr"]
 }

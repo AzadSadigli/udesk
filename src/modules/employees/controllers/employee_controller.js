@@ -4,13 +4,14 @@ const bcrypt = require('bcrypt');
 const saltRounds = 10;
 const path = require("path");
 const pth = '../modules/employees/views/';
+require(path.dirname(require.main.filename) + '/src/controllers/lang_controller.js');
 
 let configs = JSON.parse(fs.readFileSync(path.resolve(__dirname, "../../../../config/config.json")));
 let locals = {project_name: configs.project_name};
 
 exports.addPage = (req, res) => {
     locals = Object.assign(locals,{
-        title: 'Employee',
+        title: __('Employee'),
         link: 'employee',
         metaDescription: '',
         metaKeys: '',
@@ -81,7 +82,7 @@ exports.employeesList = (req,res) => {
     db.query(sql,function(error,result){
         if(!error){
             locals = Object.assign(locals,{
-                title: 'Employee',
+                title: __('Employee'),
                 link: 'employee',
                 metaDescription: '',
                 metaKeys: '',

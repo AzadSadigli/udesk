@@ -1,9 +1,10 @@
 const fs = require('fs');
-const db = require('./../../../../config/database.js');
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 const path = require("path");
 const pth = '../modules/auth/views/';
+const db = require(path.dirname(require.main.filename) + '/config/database.js');
+require(path.dirname(require.main.filename) + '/src/controllers/lang_controller.js');
 
 var sess;
 
@@ -15,7 +16,7 @@ exports.loginPage = (req, res) => {
     db.query(sql,(err,result) => {
         if(err) throw err;
         locals = Object.assign(locals,{
-            title: 'Login',
+            title: __('Login'),
             link: 'login',
             metaDescription: '',
             metaKeys: '',
@@ -25,14 +26,12 @@ exports.loginPage = (req, res) => {
         res.render(pth + 'login',locals)
     })
 }
-
-console.log(global.exist_modules);
+// console.log(exist_modules)
 
 exports.profilePage = (req, res) => {
-    console.log(__('hello'));
     let {email} = req.session;
     let sql = 'SELECT * FROM `users` WHERE email = ? ';
-    db.query(sql,[email],(err,result) => {
+    db.query(sql,[email],(err) => {
         if(err) throw err;
         locals = Object.assign(locals,{
             title: req.session.name + ' ' + req.session.surname,
@@ -47,12 +46,12 @@ exports.profilePage = (req, res) => {
     })
 }
 
-exports.registerPage = (req, res, next) => {
+exports.registerPage = (req, res) => {
     let sql = 'SELECT * FROM `users`';
-    db.query(sql,(err,result) => {
+    db.query(sql,(err) => {
         if(err) throw err;
         locals = Object.assign(locals,{
-            title: 'Register user',
+            title: __('Add user'),
             link: 'registerUser',
             metaDescription: '',
             metaKeys: '',
@@ -132,7 +131,7 @@ exports.loginAction = (req,res) => {
 }
 
 
-exports.registerUser = (req, res, next) => {
+exports.registerUser = (req, res) => {
     let token = global.token,
         $_rd_link = '/employee/add';
     let {name,surname,email,password,password_confirm} = req.body;
