@@ -1,4 +1,5 @@
 {
     "title": "hello",
-    "project_name": "Kamur Group"
+    "project_name": "Kamur Group",
+    "features": ["auth","customers","employees","expenses","invoices","products","sales","tasks","purchases"]
 }

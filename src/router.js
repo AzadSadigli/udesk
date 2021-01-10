@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const {auth,no_auth} = require('./middlewares/auth');
 
+
+/* controllers section */
 const homeController = require('./controllers/home_controller');
 const userController = require('./controllers/user_controller');
 const testController = require('./controllers/test_controller');
@@ -14,7 +16,7 @@ const invoicesController = require(md + 'invoices'+co+'invoices_controller');
 const employeesController = require(md + 'employees'+co+'employee_controller');
 
 
-
+/* routes section */
 router.get('/',auth,homeController.getHome);
 router.get('/table',auth,homeController.getTable);
 router.get('/tabs',auth,homeController.getTabs);

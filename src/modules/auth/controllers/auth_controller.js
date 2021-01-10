@@ -26,7 +26,10 @@ exports.loginPage = (req, res) => {
     })
 }
 
+console.log(global.exist_modules);
+
 exports.profilePage = (req, res) => {
+    console.log(__('hello'));
     let {email} = req.session;
     let sql = 'SELECT * FROM `users` WHERE email = ? ';
     db.query(sql,[email],(err,result) => {

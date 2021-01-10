@@ -5,7 +5,7 @@
             <div class="col-sm-4">
                 <div class="page-header float-left">
                     <div class="page-title">
-                        <h1>Dashboard</h1>
+                        <h1><%- __('Dashboard') %></h1>
                     </div>
                 </div>
             </div>
@@ -13,8 +13,8 @@
                 <div class="page-header float-right">
                     <div class="page-title">
                         <ol class="breadcrumb text-right">
-                            <li><a href="javascript:void(0)">Dashboard</a></li>
-                            <li><a href="javascript:void(0)">Profile</a></li>
+                            <li><a href="javascript:void(0)"><%- __('Dashboard') %></a></li>
+                            <li><a href="javascript:void(0)"><%- __('Profile') %></a></li>
                             <li class="active"><%- user.name + ' ' + user.surname %></li>
                         </ol>
                     </div>
@@ -30,7 +30,7 @@
             <div class="col-md-4">
                 <div class="card">
                     <div class="card-header">
-                        <strong class="card-title mb-3">Profile Card</strong>
+                        <strong class="card-title mb-3">---</strong>
                     </div>
                     <div class="card-body">
                         <div class="mx-auto d-block">
@@ -70,36 +70,25 @@
                         <table class="table table-hovered">
                             <tbody>
                                 <tr>
-                                    <td class="bold">Name</td>
+                                    <td class="bold"><%- __('Name') %></td>
                                     <td><%- user.name %></td>
                                 </tr>
                                 <tr>
-                                    <td class="bold">Surname</td>
+                                    <td class="bold"><%- __('Surname') %></td>
                                     <td><%- user.surname %></td>
                                 </tr>
                                 <tr>
-                                    <td class="bold">Email</td>
+                                    <td class="bold"><%- __('Email') %></td>
                                     <td><%- user.email %></td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
-                    <!-- <footer class="twt-footer">
-                        <a href="#"><i class="fa fa-camera"></i></a>
-                        <a href="#"><i class="fa fa-map-marker"></i></a>
-                        New Castle, UK
-                        <span class="pull-right">
-                            32
-                        </span>
-                    </footer> -->
                 </section>
             </div>
-
-
-
-        </div><!-- .row -->
-    </div><!-- .animated -->
-</div><!-- .content -->
+        </div>
+    </div>
+</div>
 <% var foot = ``; %>
 <%- include('../../../views/layouts/foot', {foot:foot}) %>
 

@@ -3,7 +3,7 @@
             <div id="main-menu" class="main-menu collapse navbar-collapse">
                 <ul class="nav navbar-nav">
                     <li <% if(link === 'home'){ %> class="active" <% } %> >
-                        <a href="/"><i class="menu-icon fa fa-laptop"></i>Dashboard </a>
+                        <a href="/"><i class="menu-icon fa fa-laptop"></i><%- __('Dashboard') %> </a>
                     </li>
                     <!-- <li class="menu-title">UI elements</li> -->
                     <li class="menu-item-has-children dropdown <% if(['employees','table'].includes(link)){ %> active <% } %>">
@@ -16,10 +16,10 @@
 
                     <li class="menu-item-has-children dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 
-                            <i class="menu-icon fa fa-barcode"></i>Product</a>
+                            <i class="menu-icon fa fa-barcode"></i><%- __('Product') %> </a>
                         <ul class="sub-menu children dropdown-menu">
-                            <li><i class="menu-icon fa fa-plus"></i><a href="/product/add">Add product</a></li>
-                            <li><i class="menu-icon fa fa-table"></i><a href="/product/list">Products</a></li>
+                            <li><i class="menu-icon fa fa-plus"></i><a href="/product/add"><%- __('Add product') %></a></li>
+                            <li><i class="menu-icon fa fa-table"></i><a href="/product/list"><%- __('Products') %></a></li>
                         </ul>
                     </li>
 

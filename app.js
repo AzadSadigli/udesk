@@ -9,25 +9,36 @@ const router = require('./src/router');
 const TokenGenerator = require('uuid-token-generator');
 const tokgen2 = new TokenGenerator(256, TokenGenerator.BASE62);
 
+const { I18n } = require('i18n')
+const fs = require("fs");
+const md_path = __dirname + '/src/modules/';
+const configs_datas = JSON.parse(fs.readFileSync('./config/config.json'));
 
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
-
-const i18next = require('i18next');
-const i18nextMiddleware = require('i18next-express-middleware');
-const Backend = require('i18next-node-fs-backend');
-
+const { config } = require('./config/database');
 global.current_time = new Date().toLocaleString('en-US', {timeZone: 'Asia/Baku'});
 global.token = tokgen2.generate();
 
+const i18n = new I18n()
 
-i18next.use(Backend).use(i18nextMiddleware.LanguageDetector)
-.init({
-  backend: {loadPath: __dirname + '/config/languages/{{lng}}/{{ns}}.json'},
-  detection: {order: ['querystring', 'cookie'],caches: ['cookie']},
-  fallbackLng: 'en',
-  preload: ['en', 'ru']
-});
+i18n.configure({
+    locales: ['en','az','ru','tr'],
+    directory: path.join(__dirname, 'languages'),
+    defaultLocale: 'az',
+    cookie: 'whCookieSecretName',
+    register: global
+})
+// i18n.setLocale('en')
+// console.log(__('hello'));
+
+global.exist_modules = [];
+if(Array.isArray(configs_datas.features)){
+    configs_datas.features.forEach(v => {
+        if (fs.existsSync(md_path+v)) global.exist_modules.push(v);
+    });
+}
+
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
@@ -59,11 +70,9 @@ global.slugify = function(txt){
     return text.toLowerCase().replace(/ /g,'-').replace(/[^\w-]+/g,'');
 }
 
-// global.getRandomNumbers = function() {
-//     return (new Date().getTime()).toString(36) + new Date().getUTCMilliseconds();
-// }
-
 app.use('/',router);
 
 
-app.listen(port, () => console.log(`Example app listening at http://localhost:${port}`))
+app.listen(port, () => {
+    // console.log(`Example app listening at http://localhost:${port}`)
+})
