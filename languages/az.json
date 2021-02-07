@@ -35,5 +35,15 @@
 	"Quantity": "Say",
 	"Add": "Əlavə et",
 	"Add expenditure": "Məxaric",
-	"Add income": "Mədaxil"
+	"Add income": "Mədaxil",
+	"Home": "Əsas səhifə",
+	"Employee": "İşçi",
+	"Role": "Rol",
+	"Seller": "Satıcı",
+	"Manager": "Menecer",
+	"Admin": "Admin",
+	"Developer": "Developer",
+	"Password": "Şifrə",
+	"Confirm password": "Şifrənin təsdiqi",
+	"Login": "Login"
 }

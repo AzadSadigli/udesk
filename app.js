@@ -18,22 +18,7 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 global.current_time = new Date().toLocaleString('en-US', {timeZone: 'Asia/Baku'});
 global.token = tokgen2.generate();
-
-// const i18n = new I18n()
-
-// i18n.configure({
-//     locales: ['en','az','ru','tr'],
-//     directory: path.join(__dirname, 'languages'),
-//     defaultLocale: 'az',
-//     cookie: 'whCookieSecretName',
-//     register: global
-// })
-// module.export = i18n
-
-// i18n.setLocale('tr')
-// console.log(__('hello'));
-
-
+// const helpers = require('./helpers/custom_helper');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
@@ -57,13 +42,11 @@ app.set('view engine', 'ejs');
 app.use(express.static('./views'));
 app.use('/assets',express.static('./assets'));
 
-global.slugify = function(txt){
-    text = txt.replace('ə','e').replace('ş','sh').replace('ç','ch')
-                .replace('ö','o').replace('ü','u').replace('Ə','e')
-                .replace('Ş','sh').replace('Ç','ch').replace('Ö','o')
-                .replace('Ü','u');
-    return text.toLowerCase().replace(/ /g,'-').replace(/[^\w-]+/g,'');
-}
+
+// helpers.generateNextCode('sa_customers').then(res => {
+//     console.log(res);
+// })
+
 
 global.exist_modules = [];
 if(Array.isArray(configs_datas.features)){

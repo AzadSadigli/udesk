@@ -1,8 +1,10 @@
 const fs = require('fs');
 const path = require("path");
 const pth = '../modules/products/views/';
-const db = require(path.dirname(require.main.filename) + '/config/database.js');
-require(path.dirname(require.main.filename) + '/src/controllers/lang_controller.js');
+const base_path = path.dirname(require.main.filename);
+const db = require(base_path + '/config/database.js');
+const helpers = require(base_path + '/helpers/custom_helper');
+require(base_path + '/src/controllers/lang_controller.js');
 
 let configs = JSON.parse(fs.readFileSync(path.resolve(__dirname, "../../../../config/config.json")));
 let locals = {project_name: configs.project_name};
@@ -37,7 +39,7 @@ let getMainID = () => {
 
 exports.addAction = (req, res) => {
     let {barcode,name,price,quantity} = req.body;
-    let slug = slugify(name),
+    let slug = helpers.slugify(name),
         main_id = getMainID();
 
     let list = {

@@ -2,19 +2,19 @@ const express = require('express');
 const router = express.Router();
 const {auth,no_auth} = require('./middlewares/auth');
 
-
 /* controllers section */
 const homeController = require('./controllers/home_controller');
 const userController = require('./controllers/user_controller');
 const testController = require('./controllers/test_controller');
 
-const md = './modules/';const co = '/controllers/';
-const authController = require(md + 'auth'+co+'auth_controller');
-const productController = require(md + 'products'+co+'products_controller');
-const salesController = require(md + 'sales'+co+'sales_controller');
-const purchasesController = require(md + 'purchases'+co+'purchases_controller');
-const employeesController = require(md + 'employees'+co+'employee_controller');
-const expenseController = require(md + 'expenses'+co+'expenses_controller');
+const cont_path = (name) => {return `./modules/${name}/controllers/${name}_controller`;}
+const authController = require(cont_path('auth'));
+const productController = require(cont_path('products'));
+const salesController = require(cont_path('sales'));
+const purchasesController = require(cont_path('purchases'));
+const employeesController = require(cont_path('employees'));
+const expenseController = require(cont_path('expenses'));
+const customerController = require(cont_path('customers'));
 
 
 /* routes section */
@@ -45,8 +45,6 @@ router.get('/profile',auth,authController.profilePage);
 router.get('/logout',auth,authController.logout);
 
 
-
-
 // product routes
 router.get('/product/list',auth,productController.productList);
 router.get('/product/add',auth,productController.addPage);
@@ -58,20 +56,19 @@ router.get('/login',no_auth,authController.loginPage);
 router.post('/login/action',no_auth,authController.loginAction);
 
 
-// expenses routes
+/* expenses routes */
 router.get('/expenses/list',no_auth,expenseController.expensesList);
 router.get('/expenses/expenditure/add',no_auth,expenseController.expenditureAddView);
 router.get('/expenses/income/add',no_auth,expenseController.incomeAddView);
 
 
+/* customer routes */
+router.get('/customer/add',no_auth,customerController.addView);
+router.get('/customer/list',no_auth,customerController.customerList);
+router.post('/customer/add/action',no_auth,customerController.addAction);
+
 
 router.get('/test',testController.testPage);
-
-
-
-
-
-
 
 
 

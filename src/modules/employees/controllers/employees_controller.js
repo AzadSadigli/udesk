@@ -1,5 +1,5 @@
 const fs = require('fs');
-const db = require('./../../../../config/database.js');
+const db = require('../../../../config/database.js');
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 const path = require("path");
