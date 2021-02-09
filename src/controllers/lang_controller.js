@@ -2,7 +2,7 @@ const path = require('path');
 const fs = require("fs");
 const { I18n } = require('i18n');
 const i18n = new I18n()
-const configs_datas = JSON.parse(fs.readFileSync('./config/config.json'));
+const configs_datas = JSON.parse(fs.readFileSync(__dirname + '/../../config/config.json'));
 
 console.log(fs.existsSync('./config/config.json'))
 
