@@ -40,8 +40,8 @@ app.use(flash());
 
 app.set('views', path.join(__dirname, 'src/views'));
 app.set('view engine', 'ejs');
-app.use(express.static('./views'));
-app.use('/assets',express.static(__dirname+ '/assets'));
+app.use(express.static(__dirname + '/views'));
+app.use('/assets',express.static(__dirname+'/assets'));
 
 
 // helpers.generateNextCode('sa_customers').then(res => {
