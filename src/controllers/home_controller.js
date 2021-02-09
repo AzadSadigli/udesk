@@ -2,8 +2,10 @@ const fs = require('fs');
 const path = require('path');
 require(path.dirname(require.main.filename) + '/src/controllers/lang_controller.js');
 
-let configs = JSON.parse(fs.readFileSync('./config/config.json'));
+let configs = JSON.parse(fs.readFileSync(__dirname + '/../../config/config.json'));
 let locals = {project_name: configs.project_name};
+
+// console.log(fs.existsSync('./config/config.json'))
 
 
 exports.getHome = (req, res) => {

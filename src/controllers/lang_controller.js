@@ -4,7 +4,6 @@ const { I18n } = require('i18n');
 const i18n = new I18n()
 const configs_datas = JSON.parse(fs.readFileSync(__dirname + '/../../config/config.json'));
 
-console.log(fs.existsSync('./config/config.json'))
 
 i18n.configure({
     locales: configs_datas.languages,
