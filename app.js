@@ -12,7 +12,7 @@ const tokgen2 = new TokenGenerator(256, TokenGenerator.BASE62);
 // const { I18n } = require('i18n')
 const fs = require("fs");
 const md_path = __dirname + '/src/modules/';
-const configs_datas = JSON.parse(fs.readFileSync('./config/config.json'));
+const configs_datas = JSON.parse(fs.readFileSync(__dirname + '/config/config.json'));
 require('dotenv').config({path: __dirname + '/.env'})
 
 const cookieParser = require('cookie-parser');
